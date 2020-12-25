@@ -1,0 +1,34 @@
+Bootstrap: docker
+From: centos:8.2.2004
+%files
+	dnf.conf /etc/dnf
+	CentOS-Base.repo /etc/yum.repos.d
+	CentOS-Extras.repo /etc/yum.repos.d
+	CentOS-AppStream.repo /etc/yum.repos.d
+	TSUBASA-soft-release-*.noarch.rpm /etc/yum.repos.d
+	TSUBASA-repo.repo /etc/yum.repos.d
+	TSUBASA-restricted.repo /etc/yum.repos.d
+	MLNX_OFED_LINUX-4.9-0.1.7.0-rhel8.2-x86_64.tar
+
+%post
+	mv /etc/yum.repos.d/TSUBASA-repo.repo /etc/yum.repos.d/TSUBASA-repo.repo.bk
+	mv /etc/yum.repos.d/TSUBASA-restricted.repo /etc/yum.repos.d/TSUBASA-restricted.repo.bk
+	yum -y install /etc/yum.repos.d/TSUBASA-soft-release-*.noarch.rpm
+	mv /etc/yum.repos.d/TSUBASA-repo.repo.bk /etc/yum.repos.d/TSUBASA-repo.repo
+	mv /etc/yum.repos.d/TSUBASA-restricted.repo.bk /etc/yum.repos.d/TSUBASA-restricted.repo
+	yum clean all
+	#yum -y group install ve-container nec-sdk-runtime -d 10
+	yum -y group install ve-container nec-sdk-runtime 
+
+	yum -y install perl pciutils gtk2 atk cairo tcsh lsof libnl3 libmnl ethtool tcl tk numactl-libs python36 -d 10
+	yum -y install pkgconf-pkg-config gcc-gfortran -d 10
+	tar zxvf MLNX_OFED_LINUX-4.9-0.1.7.0-rhel8.2-x86_64.tar
+	cd MLNX_OFED_LINUX-4.9-0.1.7.0-rhel8.2-x86_64 && \
+        mkdir tmp && \
+	./mlnxofedinstall --tmpdir ./tmp --user-space-only --without-fw-update -q --all && \
+	cd ../ && rm -rf ./MLNX*
+
+	yum -y group install nec-mpi-runtime ve-container-infiniband -d 10
+
+	sed -i -e "s|username=.*|username=|" -e "s|password=.*|password=|" \
+	   /etc/yum.repos.d/TSUBASA-restricted.repo
