@@ -14,7 +14,7 @@ We have tested the Singularity recipes with the following version of Singularity
 Clone the repository.
 
 ~~~
-$ git clone https://github.com/veos-sxarr-NEC/aurora/singularity.git
+$ git clone https://github.com/veos-sxarr-NEC/singularity.git
 ~~~
 
 Change the current directory to the directory which has Singularity recipes.
@@ -53,7 +53,7 @@ $ singularity exec --bind /var/opt/nec/ve/veos veos.sif env VE_NODE_NUMBER=0 ./a
 Clone the repository.
 
 ~~~
-$ git clone https://github.com/veos-sxarr-NEC/aurora/singularity.git
+$ git clone https://github.com/veos-sxarr-NEC/singularity.git
 ~~~
 
 Change the current directory to the directory which has Singularity recipes.
