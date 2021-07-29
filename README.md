@@ -5,9 +5,25 @@ This repository has Singularity recipes to build Singularity image to execute a 
 This document explains how to build a Singularity image with VEOS and related software, and how to execute a VE application on Singuraliry using the image.
 This document also explains how to build a Singuraliry image with NEC MPI and related software, and how to execute a MPI application on Singuraliry using the image.
 
+You can save and use the image as execution environment for your program.
+
 We have tested the Singularity recipes with the following version of Singularity.
 
-* Singularity 3.6.4-1.el8
+* Singularity 3.8.0-1.el8
+
+## Compatibility problems
+
+To avoid the compatibility problem, please consider the below points:
+
+* The compatibility of software between a host machine and a container.
+  * The version of VEOS in a host machine must be greater than or equal to the version of VEOS in a container.
+  * The version of NEC MPI in a host machine must be greater than or equal to the version of NEC MPI in a container.
+  * The version of MOFED in a host machine must be equal to the version of MOFED in a container.
+
+* The compatibility of software between a container and a build machine
+  * The version of NEC MPI in a container must be greater than or equal to the version of NEC MPI in a build machine where you built your program.
+  * Each software version of NEC SDK in a container must be greater than or equal to each software version of NEC SDK in a build machine where you built your program.
+
 
 ## Build the singularity image of VEOS
 
@@ -19,13 +35,13 @@ $ git clone https://github.com/veos-sxarr-NEC/singularity.git
 
 Change the current directory to the directory which has Singularity recipes.
 ~~~
-$ cd singularity/CentOS8.2
+$ cd singularity/CentOS8
 ~~~
 
-Download TSUBASA-soft-release-2.3-1.noarch.rpm.
+Download TSUBASA-soft-release-2.4-1.noarch.rpm.
 
 ~~~
-$ curl -O https://www.hpc.nec/repos/TSUBASA-soft-release-2.3-1.noarch.rpm
+$ curl -O https://www.hpc.nec/repos/TSUBASA-soft-release-2.4-1.noarch.rpm
 ~~~
 If your network is behind a proxy, please update dnf.conf to set the proxy.
 
@@ -58,20 +74,20 @@ $ git clone https://github.com/veos-sxarr-NEC/singularity.git
 
 Change the current directory to the directory which has Singularity recipes.
 ~~~
-$ cd singularity/CentOS8.2
+$ cd singularity/CentOS8
 ~~~
 
-Download TSUBASA-soft-release-2.3-1.noarch.rpm.
+Download TSUBASA-soft-release-2.4-1.noarch.rpm.
 
 ~~~
-$ curl -O https://www.hpc.nec/repos/TSUBASA-soft-release-2.3-1.noarch.rpm
+$ curl -O https://www.hpc.nec/repos/TSUBASA-soft-release-2.4-1.noarch.rpm
 ~~~
 
 Download MLNX_OFED_LINUX.
 Following MLNX_OFED_LINUX archive file is needed.
 Archive file should remain compressed.
 
-   - RHEL8.2 MLNX_OFED_LINUX-4.9-0.1.7.0-rhel8.2-x86_64.tar (select MLNX_OFED_LINUX-4.9-0.1.7.0-rhel8.2-x86_64.tgz)
+   - MLNX_OFED_LINUX-4.9-3.1.5.0-rhel8.3-x86_64.tgz
 
 If your network is behind a proxy, please update dnf.conf to set the proxy.
 

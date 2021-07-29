@@ -1,10 +1,7 @@
 Bootstrap: docker
-From: centos:8.2.2004
+From: centos:8.3.2011
 %files
 	dnf.conf /etc/dnf
-	CentOS-Base.repo /etc/yum.repos.d
-	CentOS-Extras.repo /etc/yum.repos.d
-	CentOS-AppStream.repo /etc/yum.repos.d
 	TSUBASA-soft-release-*.noarch.rpm /etc/yum.repos.d
 	TSUBASA-repo.repo /etc/yum.repos.d
 	TSUBASA-restricted.repo /etc/yum.repos.d
