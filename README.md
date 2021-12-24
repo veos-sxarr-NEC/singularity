@@ -44,7 +44,6 @@ Download TSUBASA-soft-release-2.6-1.noarch.rpm.
 $ curl -O https://sxauroratsubasa.sakura.ne.jp/repos/TSUBASA-soft-release-2.6-1.noarch.rpm
 ~~~
 
-~~~
 If your network is behind a proxy, please update dnf.conf to set the proxy.
 
 Build a singularity image.
