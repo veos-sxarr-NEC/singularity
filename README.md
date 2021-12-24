@@ -2,14 +2,14 @@
 
 This repository has Singularity recipes to build Singularity image to execute a program on Vector Engine of SX-Aurora TSUBASA.
 
-This document explains how to build a Singularity image with VEOS and related software, and how to execute a VE application on Singuraliry using the image.
-This document also explains how to build a Singuraliry image with NEC MPI and related software, and how to execute a MPI application on Singuraliry using the image.
+This document explains how to build a Singularity image with VEOS and related software, and how to execute a VE application on Singularity using the image.
+This document also explains how to build a Singularity image with NEC MPI and related software, and how to execute a MPI application on Singularity using the image.
 
 You can save and use the image as execution environment for your program.
 
 We have tested the Singularity recipes with the following version of Singularity.
 
-* Singularity 3.8.0-1.el8
+* Singularity 3.8.3-1.el8
 
 ## Compatibility problems
 
@@ -38,10 +38,12 @@ Change the current directory to the directory which has Singularity recipes.
 $ cd singularity/CentOS8
 ~~~
 
-Download TSUBASA-soft-release-2.4-1.noarch.rpm.
+Download TSUBASA-soft-release-2.6-1.noarch.rpm.
 
 ~~~
-$ curl -O https://www.hpc.nec/repos/TSUBASA-soft-release-2.4-1.noarch.rpm
+$ curl -O https://sxauroratsubasa.sakura.ne.jp/repos/TSUBASA-soft-release-2.6-1.noarch.rpm
+~~~
+
 ~~~
 If your network is behind a proxy, please update dnf.conf to set the proxy.
 
@@ -77,17 +79,17 @@ Change the current directory to the directory which has Singularity recipes.
 $ cd singularity/CentOS8
 ~~~
 
-Download TSUBASA-soft-release-2.4-1.noarch.rpm.
+Download TSUBASA-soft-release-2.6-1.noarch.rpm.
 
 ~~~
-$ curl -O https://www.hpc.nec/repos/TSUBASA-soft-release-2.4-1.noarch.rpm
+$ curl -O https://sxauroratsubasa.sakura.ne.jp/repos/TSUBASA-soft-release-2.6-1.noarch.rpm
 ~~~
 
 Download MLNX_OFED_LINUX.
 Following MLNX_OFED_LINUX archive file is needed.
 Archive file should remain compressed.
 
-   - MLNX_OFED_LINUX-4.9-3.1.5.0-rhel8.3-x86_64.tgz
+   - MLNX_OFED_LINUX-4.9-4.0.8.0-rhel8.4-x86_64.tgz
 
 If your network is behind a proxy, please update dnf.conf to set the proxy.
 
@@ -103,7 +105,7 @@ Run a NEC MPI application using the below commands.
 
 ~~~
 $ source /opt/nec/ve/mpi/<nec mpi version in the image>/bin64/necmpivars.sh
-$ mpirun <nec mpi options> singularity exec --bind /var/opt/nec/ve/veos <image SIF> <pass to binary in container>
+$ mpirun <nec mpi options> /usr/bin/singularity exec --bind /var/opt/nec/ve/veos <image SIF> <pass to binary in container>
 ~~~
 
 For example, run a NEC MPI application on interactive shell.
