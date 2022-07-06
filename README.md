@@ -9,7 +9,7 @@ You can save and use the image as execution environment for your program.
 
 We have tested the Singularity recipes with the following version of Singularity.
 
-* Singularity 3.8.6-1.el8
+* Singularity 3.8.7-1.el8
 
 ## Compatibility problems
 
@@ -76,7 +76,7 @@ $ git clone https://github.com/veos-sxarr-NEC/singularity.git
 
 Change the current directory to the directory which has Singularity recipes.
 ~~~
-$ cd singularity/CentOS8
+$ cd singularity/RockyLinux8
 ~~~
 
 Download TSUBASA-soft-release-2.7-1.noarch.rpm.
@@ -90,7 +90,7 @@ Download MLNX_OFED_LINUX.
 Following MLNX_OFED_LINUX archive file is needed.
 Archive file should remain compressed.
 
-   - MLNX_OFED_LINUX-5.5-1.0.3.2-rhel8.4-x86_64.tgz
+   - MLNX_OFED_LINUX-5.6-1.0.3.3-rhel8.5-x86_64.tgz
 
 If your network is behind a proxy, please update dnf.conf to set the proxy.
 

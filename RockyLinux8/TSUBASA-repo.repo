@@ -14,7 +14,7 @@ enabled=1
 
 [nec-mpi-runtime]
 name=NEC MPI runtime
-baseurl=https://sxauroratsubasa.sakura.ne.jp/repos/runtime/mpi/mpi_el8
+baseurl=https://sxauroratsubasa.sakura.ne.jp/repos/runtime/mpi/mpi_mofed5_el8
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-TSUBASA-soft
 gpgcheck=1
 enabled=1
@@ -28,7 +28,7 @@ enabled=0
 
 [nec-mpi-community]
 name=NEC MPI community
-baseurl=https://sxauroratsubasa.sakura.ne.jp/repos/community/mpi/mpi_el8
+baseurl=https://sxauroratsubasa.sakura.ne.jp/repos/community/mpi/mpi_mofed5_el8
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-TSUBASA-soft
 gpgcheck=1
 enabled=0
