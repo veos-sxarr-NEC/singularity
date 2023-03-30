@@ -5,7 +5,7 @@ From: rockylinux:8.6.20227707
 	TSUBASA-soft-release-*.noarch.rpm /etc/yum.repos.d
 	TSUBASA-repo.repo /etc/yum.repos.d
 	TSUBASA-restricted.repo /etc/yum.repos.d
-	MLNX_OFED_LINUX-5.6-2.0.9.0-rhel8.6-x86_64.tgz
+	MLNX_OFED_LINUX-5.8-1.1.2.1-rhel8.6-x86_64.tgz
 
 %post
 	mv /etc/yum.repos.d/TSUBASA-repo.repo /etc/yum.repos.d/TSUBASA-repo.repo.bk
@@ -18,12 +18,12 @@ From: rockylinux:8.6.20227707
 	yum -y group install ve-container nec-sdk-runtime
 
 	yum -y install perl pciutils gtk2 atk cairo tcsh lsof libnl3 libmnl ethtool tcl tk numactl-libs python36 -d 10
-	yum -y install pkgconf-pkg-config gcc-gfortran -d 10
+	yum -y install pkgconf-pkg-config libquadmath libgfortran gcc-gfortran -d 10
 
 	yum -y install fuse-libs kernel-modules-extra
 
-	tar zxvf MLNX_OFED_LINUX-5.6-2.0.9.0-rhel8.6-x86_64.tgz
-	cd MLNX_OFED_LINUX-5.6-2.0.9.0-rhel8.6-x86_64 && \
+	tar zxvf MLNX_OFED_LINUX-5.8-1.1.2.1-rhel8.6-x86_64.tgz
+	cd MLNX_OFED_LINUX-5.8-1.1.2.1-rhel8.6-x86_64 && \
         mkdir tmp && \
 	./mlnxofedinstall --tmpdir ./tmp --user-space-only --without-fw-update -q --all && \
 	cd ../ && rm -rf ./MLNX*
@@ -35,10 +35,13 @@ From: rockylinux:8.6.20227707
 	   /etc/yum.repos.d/TSUBASA-restricted.repo
 
 %environment
-	MPI_VER=${MPI_VER:-$(ls -1 /opt/nec/ve/mpi/ | grep -v libexec | sort -V | tail -1)}
+	if [ "`cat /sys/class/ve/ve*/ve_arch_class | sort | tail -1`" = "ve3" ]; then
+		MPI_VER=${MPI_VER:-$(ls -1 /opt/nec/ve3/mpi/ | grep -v libexec | sort -V | tail -1)}
+		source /opt/nec/ve3/mpi/$MPI_VER/bin/necmpivars.sh ""
+	else
+		MPI_VER=${MPI_VER:-$(ls -1 /opt/nec/ve/mpi/ | grep -v libexec | sort -V | tail -1)}
+		source /opt/nec/ve/mpi/$MPI_VER/bin/necmpivars.sh ""
+	fi
 	NLC_VER=${NLC_VER:-$(ls -1 /opt/nec/ve/nlc/ | sort -V | tail -1)}
-	source /opt/nec/ve/mpi/$MPI_VER/bin/necmpivars.sh ""
-	VE_LD_LIBRARY_PATH="$VE_LD_LIBRARY_PATH:/opt/nec/ve/nlc/$NLC_VER/lib"
-	export VE_LD_LIBRARY_PATH
-	LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/nec/ve/nlc/$NLC_VER/lib"
+	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/nec/ve/nlc/$NLC_VER/lib
 	export LD_LIBRARY_PATH
