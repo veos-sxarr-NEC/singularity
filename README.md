@@ -9,7 +9,7 @@ You can save and use the image as execution environment for your program.
 
 We have tested the Apptainer recipes with the following version of Apptainer.
 
-* Apptainer 1.1.6-1.el8
+* Apptainer 1.1.8-1.el8
 
 ## Note
 
