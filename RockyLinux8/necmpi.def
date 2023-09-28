@@ -1,11 +1,11 @@
 Bootstrap: docker
-From: rockylinux:8.6.20227707
+From: rockylinux:8.8.20230518
 %files
 	dnf.conf /etc/dnf
 	TSUBASA-soft-release-*.noarch.rpm /etc/yum.repos.d
 	TSUBASA-repo.repo /etc/yum.repos.d
 	TSUBASA-restricted.repo /etc/yum.repos.d
-	MLNX_OFED_LINUX-5.8-1.1.2.1-rhel8.6-x86_64.tgz
+	MLNX_OFED_LINUX-23.04-1.1.3.0-rhel8.8-x86_64.tgz
 
 %post
 	mv /etc/yum.repos.d/TSUBASA-repo.repo /etc/yum.repos.d/TSUBASA-repo.repo.bk
@@ -22,8 +22,8 @@ From: rockylinux:8.6.20227707
 
 	yum -y install fuse-libs kernel-modules-extra
 
-	tar zxvf MLNX_OFED_LINUX-5.8-1.1.2.1-rhel8.6-x86_64.tgz
-	cd MLNX_OFED_LINUX-5.8-1.1.2.1-rhel8.6-x86_64 && \
+	tar zxvf MLNX_OFED_LINUX-23.04-1.1.3.0-rhel8.8-x86_64.tgz 
+	cd MLNX_OFED_LINUX-23.04-1.1.3.0-rhel8.8-x86_64 && \
         mkdir tmp && \
 	./mlnxofedinstall --tmpdir ./tmp --user-space-only --without-fw-update -q --all && \
 	cd ../ && rm -rf ./MLNX*

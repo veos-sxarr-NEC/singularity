@@ -9,7 +9,7 @@ You can save and use the image as execution environment for your program.
 
 We have tested the Apptainer recipes with the following version of Apptainer.
 
-* Apptainer 1.1.8-1.el8
+* Apptainer 1.1.9-1.el8
 
 ## Note
 
@@ -50,11 +50,11 @@ Change the current directory to the directory which has Apptainer recipes.
 $ cd singularity/RockyLinux8
 ~~~
 
-Download TSUBASA-soft-release-2.8-1.noarch.rpm.
+Download TSUBASA-soft-release-ve1-3.0-1.noarch.rpm.
 
 
 ~~~
-$ curl -O https://sxauroratsubasa.sakura.ne.jp/repos/TSUBASA-soft-release-2.8-1.noarch.rpm
+$ curl -O https://sxauroratsubasa.sakura.ne.jp/repos/TSUBASA-soft-release-ve1-3.0-1.noarch.rpm
 ~~~
 
 If your network is behind a proxy, please update dnf.conf to set the proxy.
@@ -91,18 +91,18 @@ Change the current directory to the directory which has Apptainer recipes.
 $ cd singularity/RockyLinux8
 ~~~
 
-Download TSUBASA-soft-release-2.8-1.noarch.rpm.
+Download TSUBASA-soft-release-ve1-3.0-1.noarch.rpm.
 
 
 ~~~
-$ curl -O https://sxauroratsubasa.sakura.ne.jp/repos/TSUBASA-soft-release-2.8-1.noarch.rpm
+$ curl -O https://sxauroratsubasa.sakura.ne.jp/repos/TSUBASA-soft-release-ve1-3.0-1.noarch.rpm
 ~~~
 
 Download MLNX_OFED_LINUX.
 Following MLNX_OFED_LINUX archive file is needed.
 Archive file should remain compressed.
 
-   - MLNX_OFED_LINUX-5.8-1.1.2.1-rhel8.6-x86_64.tgz
+   - MLNX_OFED_LINUX-23.04-1.1.3.0-rhel8.8-x86_64.tgz
 
 If your network is behind a proxy, please update dnf.conf to set the proxy.
 

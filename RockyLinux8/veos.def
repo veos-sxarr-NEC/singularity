@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: rockylinux:8.6.20227707
+From: rockylinux:8.8.20230518
 %files
 	dnf.conf /etc/dnf
 	TSUBASA-soft-release-*.noarch.rpm /etc/yum.repos.d
