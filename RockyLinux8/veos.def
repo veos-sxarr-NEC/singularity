@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: rockylinux:8.8.20230518
+From: rockylinux/rockylinux:8.10.20240528
 %files
 	dnf.conf /etc/dnf
 	TSUBASA-soft-release-*.noarch.rpm /etc/yum.repos.d
@@ -13,7 +13,7 @@ From: rockylinux:8.8.20230518
 	mv /etc/yum.repos.d/TSUBASA-repo.repo.bk /etc/yum.repos.d/TSUBASA-repo.repo
 	mv /etc/yum.repos.d/TSUBASA-restricted.repo.bk /etc/yum.repos.d/TSUBASA-restricted.repo
 	yum clean all
-	yum -y group install ve-container nec-sdk-runtime -d 10
+	yum -y group install ve-container nec-sdk-runtime -d 10 && yum clean all
 	sed -i -e "s|username=.*|username=|" -e "s|password=.*|password=|" \
 	   /etc/yum.repos.d/TSUBASA-restricted.repo
 

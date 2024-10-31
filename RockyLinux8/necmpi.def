@@ -1,11 +1,11 @@
 Bootstrap: docker
-From: rockylinux:8.8.20230518
+From: rockylinux/rockylinux:8.10.20240528
 %files
 	dnf.conf /etc/dnf
 	TSUBASA-soft-release-*.noarch.rpm /etc/yum.repos.d
 	TSUBASA-repo.repo /etc/yum.repos.d
 	TSUBASA-restricted.repo /etc/yum.repos.d
-	MLNX_OFED_LINUX-23.04-1.1.3.0-rhel8.8-x86_64.tgz
+	MLNX_OFED_LINUX-23.10-3.2.2.0-rhel8.10-x86_64.tgz
 
 %post
 	mv /etc/yum.repos.d/TSUBASA-repo.repo /etc/yum.repos.d/TSUBASA-repo.repo.bk
@@ -15,21 +15,21 @@ From: rockylinux:8.8.20230518
 	mv /etc/yum.repos.d/TSUBASA-restricted.repo.bk /etc/yum.repos.d/TSUBASA-restricted.repo
 	yum clean all
 	#yum -y group install ve-container nec-sdk-runtime -d 10
-	yum -y group install ve-container nec-sdk-runtime
+	yum -y group install ve-container nec-sdk-runtime && yum clean all
 
-	yum -y install perl pciutils gtk2 atk cairo tcsh lsof libnl3 libmnl ethtool tcl tk numactl-libs python36 -d 10
-	yum -y install pkgconf-pkg-config libquadmath libgfortran gcc-gfortran -d 10
+	yum -y install perl pciutils gtk2 atk cairo tcsh lsof libnl3 libmnl ethtool tcl tk numactl-libs python36 -d 10 && yum clean all
+	yum -y install pkgconf-pkg-config libquadmath libgfortran gcc-gfortran -d 10 && yum clean all
 
-	yum -y install fuse-libs kernel-modules-extra
+	yum -y install fuse-libs kernel-modules-extra && yum clean all
 
-	tar zxvf MLNX_OFED_LINUX-23.04-1.1.3.0-rhel8.8-x86_64.tgz 
-	cd MLNX_OFED_LINUX-23.04-1.1.3.0-rhel8.8-x86_64 && \
+	tar zxvf MLNX_OFED_LINUX-23.10-3.2.2.0-rhel8.10-x86_64.tgz 
+	cd MLNX_OFED_LINUX-23.10-3.2.2.0-rhel8.10-x86_64 && \
         mkdir tmp && \
 	./mlnxofedinstall --tmpdir ./tmp --user-space-only --without-fw-update -q --all && \
 	cd ../ && rm -rf ./MLNX*
 
-	yum -y group install ve-container-infiniband -d 10
-	yum -y group install nec-mpi-runtime -d 10
+	yum -y group install ve-container-infiniband -d 10 && yum clean all
+	yum -y group install nec-mpi-runtime -d 10 && yum clean all
 
 	sed -i -e "s|username=.*|username=|" -e "s|password=.*|password=|" \
 	   /etc/yum.repos.d/TSUBASA-restricted.repo

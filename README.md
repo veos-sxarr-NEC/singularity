@@ -9,7 +9,7 @@ You can save and use the image as execution environment for your program.
 
 We have tested the Apptainer recipes with the following version of Apptainer.
 
-* Apptainer 1.1.9-1.el8
+* Apptainer 1.3.3-1.el8
 
 ## Note
 
@@ -102,7 +102,7 @@ Download MLNX_OFED_LINUX.
 Following MLNX_OFED_LINUX archive file is needed.
 Archive file should remain compressed.
 
-   - MLNX_OFED_LINUX-23.04-1.1.3.0-rhel8.8-x86_64.tgz
+   - MLNX_OFED_LINUX-23.10-3.2.2.0-rhel8.10-x86_64.tgz
 
 If your network is behind a proxy, please update dnf.conf to set the proxy.
 
