@@ -9,7 +9,12 @@ You can save and use the image as execution environment for your program.
 
 We have tested the Apptainer recipes with the following version of Apptainer.
 
-* Apptainer 1.3.3-1.el8
+RHEL 8.10 
+* Apptainer 1.3.4-1.el8
+
+RHEL 10.0
+* Apptainer 1.4.3-1.el10_0
+
 
 ## Note
 
@@ -45,16 +50,15 @@ Clone the repository.
 $ git clone https://github.com/veos-sxarr-NEC/singularity.git
 ~~~
 
-Change the current directory to the directory which has Apptainer recipes.
-~~~
-$ cd singularity/RockyLinux8
-~~~
-
-Download TSUBASA-soft-release-ve1-3.0-1.noarch.rpm.
-
+There are directories containing recipes and necessary files to create images for specific operating systems. Change the current directory to the directory for the desired operating system. For example: singularity/RockeyLinux10.
 
 ~~~
-$ curl -O https://sxauroratsubasa.sakura.ne.jp/repos/TSUBASA-soft-release-ve1-3.0-1.noarch.rpm
+$ cd singularity/RockyLinux10
+~~~
+Download TSUBASA-soft-release-ve1-3.1-2.noarch.rpm
+
+~~~
+$ curl -O https://sxauroratsubasa.sakura.ne.jp/repos/TSUBASA-soft-release-ve1-3.1-2.noarch.rpm
 ~~~
 
 If your network is behind a proxy, please update dnf.conf to set the proxy.
@@ -63,6 +67,12 @@ Build a apptainer image.
 
 ~~~
 $ apptainer build --fakeroot veos.sif veos.def
+~~~
+
+If the build fails because of issues related to resolv.conf, follow the steps below to build.
+~~~
+$ touch resolv.conf
+$ apptainer build --fakeroot -B ${PWD}/resolv.conf:/etc/resolv.conf veos.sif veos.def
 ~~~
 
 ## Run an application in the apptainer container
@@ -78,6 +88,21 @@ For example, run an application with VE NODE#0.
 $ apptainer exec --bind /var/opt/nec/ve/veos veos.sif env VE_NODE_NUMBER=0 ./a.out
 ~~~
 
+## Run a VEO or VEDA application in the apptainer container on RHEL10
+
+Non-root user needs the CAP_IPC_LOCK capability to run VEO and VEDA programs, but this is required only on RHEL10.
+Please execute the following command before running VEO or VEDA programs. This step must be done once by the root user.
+
+~~~
+$ sudo apptainer capability add --user <user> IPC_LOCK
+~~~
+
+Then, execute the following command with "--add-caps" option to add the Linux capability.
+
+~~~
+$ apptainer exec --bind /var/opt/nec/ve/veos --add-caps CAP_IPC_LOCK <image SIF> <pass to binary in container>
+~~~
+
 ## Build the apptainer image of NEC MPI
 
 Clone the repository.
@@ -88,16 +113,16 @@ $ git clone https://github.com/veos-sxarr-NEC/singularity.git
 
 Change the current directory to the directory which has Apptainer recipes.
 ~~~
-$ cd singularity/RockyLinux8
+$ cd singularity/RockyLinux10
 ~~~
 
-Download TSUBASA-soft-release-ve1-3.0-1.noarch.rpm.
-
+Download TSUBASA-soft-release-ve1-3.1-2.noarch.rpm.
 
 ~~~
-$ curl -O https://sxauroratsubasa.sakura.ne.jp/repos/TSUBASA-soft-release-ve1-3.0-1.noarch.rpm
+$ curl -O https://sxauroratsubasa.sakura.ne.jp/repos/TSUBASA-soft-release-ve1-3.1-2.noarch.rpm
 ~~~
 
+### For RHEL8.10
 Download MLNX_OFED_LINUX.
 Following MLNX_OFED_LINUX archive file is needed.
 Archive file should remain compressed.
@@ -111,6 +136,33 @@ Build a apptainer image.
 ~~~
 $ apptainer build --fakeroot necmpi.sif necmpi.def
 ~~~
+
+If the build fails because of issues related to resolv.conf, follow the steps below to build.
+~~~
+$ touch resolv.conf
+$ apptainer build --fakeroot -B ${PWD}/resolv.conf:/etc/resolv.conf necmpi.sif necmpi.def
+~~~
+
+### For RHEL10.0
+Download NVIDIA DOCA_LINUX.
+Following NVIDIA DOCA_LINUX is needed.
+
+   - doca-host-3.1.0-091000_25.07_rhel100.x86_64.rpm
+
+If your network is behind a proxy, please update dnf.conf to set the proxy.
+
+Build a apptainer image.
+
+~~~
+$ apptainer build --fakeroot necmpi.sif necmpi.def
+~~~
+
+If the build fails because of issues related to resolv.conf, follow the steps below to build.
+~~~
+$ touch resolv.conf
+$ apptainer build --fakeroot -B ${PWD}/resolv.conf:/etc/resolv.conf necmpi.sif necmpi.def
+~~~
+
 
 ## Run a NEC MPI application in the apptainer container
 
@@ -142,4 +194,19 @@ source /opt/nec/ve/mpi/2.11.0/bin64/necmpivars.sh
 mpirun -np 16 /usr/bin/apptainer exec --bind /var/opt/nec/ve/veos ~/necmpi.sif ~/a.out
 
 $ qsub job.sh
+~~~
+
+## Run a VEO or VEDA application in the apptainer container on RHEL10
+
+Non-root user needs the CAP_IPC_LOCK capability to run VEO and VEDA programs, but this is required only on RHEL10.
+Please execute the following command before running VEO or VEDA programs. This step must be done once by the root user.
+
+~~~
+$ sudo apptainer capability add --user <user> IPC_LOCK
+~~~
+
+Then, execute the following command with "--add-caps" option to add the Linux capability.
+
+~~~
+$ apptainer exec --bind /var/opt/nec/ve/veos --add-caps CAP_IPC_LOCK <image SIF> <pass to binary in container>
 ~~~

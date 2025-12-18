@@ -45,3 +45,4 @@ From: rockylinux/rockylinux:8.10.20240528
 	NLC_VER=${NLC_VER:-$(ls -1 /opt/nec/ve/nlc/ | sort -V | tail -1)}
 	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/nec/ve/nlc/$NLC_VER/lib
 	export LD_LIBRARY_PATH
+

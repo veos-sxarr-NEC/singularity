@@ -1,0 +1,43 @@
+Bootstrap: docker
+From: rockylinux/rockylinux:10.0.20250606
+%files
+        dnf.conf /etc/dnf
+        TSUBASA-soft-release-*.noarch.rpm /etc/yum.repos.d
+        TSUBASA-repo.repo /etc/yum.repos.d
+        TSUBASA-restricted.repo /etc/yum.repos.d
+        doca-host-3.1.0-091000_25.07_rhel100.x86_64.rpm
+
+%post
+        mv /etc/yum.repos.d/TSUBASA-repo.repo /etc/yum.repos.d/TSUBASA-repo.repo.bk
+        mv /etc/yum.repos.d/TSUBASA-restricted.repo /etc/yum.repos.d/TSUBASA-restricted.repo.bk
+        yum -y install /etc/yum.repos.d/TSUBASA-soft-release-*.noarch.rpm
+        mv /etc/yum.repos.d/TSUBASA-repo.repo.bk /etc/yum.repos.d/TSUBASA-repo.repo
+        mv /etc/yum.repos.d/TSUBASA-restricted.repo.bk /etc/yum.repos.d/TSUBASA-restricted.repo
+        yum clean all
+        #yum -y group install ve-container nec-sdk-runtime -d 10
+        yum -y group install ve-container nec-sdk-runtime && yum clean all
+
+        yum -y install perl pciutils gtk3 atk cairo tcsh lsof libnl3 libmnl ethtool tcl tk numactl-libs python3 -d 10 && yum clean all
+        yum -y install pkgconf-pkg-config libquadmath libgfortran gcc-gfortran -d 10 && yum clean all
+
+        yum -y install fuse-libs kernel-modules-extra && yum clean all
+
+        yum -y install ./doca-host-3.1.0-091000_25.07_rhel100.x86_64.rpm
+
+        yum -y group install ve-container-infiniband -d 10 && yum clean all
+        yum -y group install nec-mpi-runtime -d 10 && yum clean all
+
+        sed -i -e "s|username=.*|username=|" -e "s|password=.*|password=|" \
+           /etc/yum.repos.d/TSUBASA-restricted.repo
+
+%environment
+        if [ "`cat /sys/class/ve/ve*/ve_arch_class | sort | tail -1`" = "ve3" ]; then
+                MPI_VER=${MPI_VER:-$(ls -1 /opt/nec/ve3/mpi/ | grep -v libexec | sort -V | tail -1)}
+                source /opt/nec/ve3/mpi/$MPI_VER/bin/necmpivars.sh ""
+        else
+                MPI_VER=${MPI_VER:-$(ls -1 /opt/nec/ve/mpi/ | grep -v libexec | sort -V | tail -1)}
+                source /opt/nec/ve/mpi/$MPI_VER/bin/necmpivars.sh ""
+        fi
+        NLC_VER=${NLC_VER:-$(ls -1 /opt/nec/ve/nlc/ | sort -V | tail -1)}
+        LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/nec/ve/nlc/$NLC_VER/lib
+        export LD_LIBRARY_PATH
