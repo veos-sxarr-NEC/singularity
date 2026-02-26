@@ -10,7 +10,7 @@ You can save and use the image as execution environment for your program.
 We have tested the Apptainer recipes with the following version of Apptainer.
 
 RHEL 8.10 
-* Apptainer 1.3.4-1.el8
+* Apptainer 1.4.5-2.el8
 
 RHEL 10.0
 * Apptainer 1.4.3-1.el10_0
