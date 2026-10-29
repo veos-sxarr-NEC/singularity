@@ -12,9 +12,8 @@ We have tested the Apptainer recipes with the following version of Apptainer.
 RHEL 8.10 
 * Apptainer 1.4.5-2.el8
 
-RHEL 10.0
-* Apptainer 1.4.3-1.el10_0
-
+RHEL 10.2
+* Apptainer 1.5.3-1.el10_3
 
 ## Note
 
@@ -143,11 +142,11 @@ $ touch resolv.conf
 $ apptainer build --fakeroot -B ${PWD}/resolv.conf:/etc/resolv.conf necmpi.sif necmpi.def
 ~~~
 
-### For RHEL10.0
+### For RHEL10.2
 Download NVIDIA DOCA_LINUX.
 Following NVIDIA DOCA_LINUX is needed.
 
-   - doca-host-3.1.0-091000_25.07_rhel100.x86_64.rpm
+   - doca-host-3.2.3-019000_25.10_rhel10.x86_64.rpm
 
 If your network is behind a proxy, please update dnf.conf to set the proxy.
 

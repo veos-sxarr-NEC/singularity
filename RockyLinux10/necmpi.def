@@ -5,7 +5,7 @@ From: rockylinux/rockylinux:10.0.20250606
         TSUBASA-soft-release-*.noarch.rpm /etc/yum.repos.d
         TSUBASA-repo.repo /etc/yum.repos.d
         TSUBASA-restricted.repo /etc/yum.repos.d
-        doca-host-3.1.0-091000_25.07_rhel100.x86_64.rpm
+        doca-host-3.2.3-019000_25.10_rhel10.x86_64.rpm
 
 %post
         mv /etc/yum.repos.d/TSUBASA-repo.repo /etc/yum.repos.d/TSUBASA-repo.repo.bk
@@ -22,7 +22,7 @@ From: rockylinux/rockylinux:10.0.20250606
 
         yum -y install fuse-libs kernel-modules-extra && yum clean all
 
-        yum -y install ./doca-host-3.1.0-091000_25.07_rhel100.x86_64.rpm
+        yum -y install ./doca-host-3.2.3-019000_25.10_rhel10.x86_64.rpm
 
         yum -y group install ve-container-infiniband -d 10 && yum clean all
         yum -y group install nec-mpi-runtime -d 10 && yum clean all
